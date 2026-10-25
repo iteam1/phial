@@ -1,0 +1,34 @@
+{
+  "name": "phial",
+  "displayName": "Phial",
+  "description": "Show a graph of code and docs around the cursor.",
+  "version": "0.0.1",
+  "publisher": "locch",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "phial.showGraph",
+        "title": "Phial: Show Graph"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "bun build src/extension.ts --outdir dist --target node --format cjs --external vscode --sourcemap",
+    "watch": "bun run build --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^20",
+    "@types/vscode": "~1.90.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

@@ -1,2 +1,8 @@
 .tab
 .claude/scheduled_tasks.lock
+node_modules/
+dist/
+out/
+*.vsix
+.vscode-test/
+*.tmp.*
