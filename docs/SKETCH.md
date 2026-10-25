@@ -10,7 +10,12 @@
 
 - Meaning I think there are many layers for building a comprehensive view: code layer, doc layer, and the links between them. Each graph can be explored on its own or together.
 
+- The architect of the codebase must able to add new features in the future without changing the core.
+
+
 ## Features
+
+### Feature 1 - Graph view
 
 - Ego Graph: a focused view of one node and its direct neighbors.
 
@@ -23,3 +28,5 @@
 - Not a giant graph, but able to handle multiple sub-graphs, and we can perform operations like create, update, delete, merge and link sub-graphs together.
 
 - Click to Navigate: click a node to jump to its source in the editor.
+
+## Workflow
