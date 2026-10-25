@@ -10,8 +10,7 @@
 
 - Meaning I think there are many layers for building a comprehensive view: code layer, doc layer, and the links between them. Each graph can be explored on its own or together.
 
-- The architect of the codebase must able to add new features in the future without changing the core.
-
+- The architect of the codebase must be able to add new features in the future without changing the core.
 
 ## Features
 
@@ -30,3 +29,29 @@
 - Click to Navigate: click a node to jump to its source in the editor.
 
 ## Workflow
+
+### Simple workflow
+
+- Open a file or doc and pick a center node (the symbol under the cursor, or a heading).
+
+- Currently we rely on an agent coding CLI to perform the analysis: it reads the code and docs, then writes the nodes and edges to the local store.
+
+- In the future we can use AST and LSP tools that the agent coding CLI can use to get exact edges (definitions, references, calls) instead of heuristics.
+
+- Expand hop by hop to follow calls, references, imports and doc links, until you reach leaf nodes.
+
+- Click a node to jump to its source.
+
+```mermaid
+flowchart TD
+    A[Open a file or doc] --> B[Pick a node<br/>symbol under cursor or heading]
+    B --> C[Ask the AI agent to collect<br/>related nodes and edges]
+    C --> F[Save nodes and edges<br/>to local store]
+    F --> G[Build graph around the node]
+    G --> H[Graph view<br/>always live]
+    G -- node has no further edges --> I[Mark as leaf]
+
+    H -- expand a node<br/>next hop, on demand --> C
+    H -- click a node --> J[Jump to its source<br/>in the editor]
+    H -- make it the new center --> B
+```
