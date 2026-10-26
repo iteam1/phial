@@ -28,30 +28,36 @@
 
 - Click to Navigate: click a node to jump to its source in the editor.
 
+- On-demand Graph: the graph viz engine only draws, and the events that trigger a draw are separate. A graph can be drawn when I click something in the editor, or when I ask the agent coding CLI, which calls the extension to visualize the result.
+
 ## Workflow
 
-### Simple workflow
+One graph engine, two ways to trigger it:
 
-- Open a file or doc and pick a center node (the symbol under the cursor, or a heading).
+- On click: pick the current node in the editor (the symbol under the cursor, or a heading).
 
-- Currently we rely on an agent coding CLI to perform the analysis: it reads the code and docs, then writes the nodes and edges to the local store.
+- By chat: ask the agent coding CLI, e.g. "show how this doc relates to the code".
 
-- In the future we can use AST and LSP tools that the agent coding CLI can use to get exact edges (definitions, references, calls) instead of heuristics.
+Both go through the same steps:
 
-- Expand hop by hop to follow calls, references, imports and doc links, until you reach leaf nodes.
+- The agent coding CLI collects the related nodes and edges and writes them to the local store. In the future it can use AST and LSP tools to get exact edges (definitions, references, calls) instead of heuristics.
+
+- The graph engine builds the graph from the store and shows it in the graph view.
+
+- Expand a node to get the next hop, on demand, until you reach leaf nodes.
 
 - Click a node to jump to its source.
 
 ```mermaid
 flowchart TD
-    A[Open a file or doc] --> B[Pick a node<br/>symbol under cursor or heading]
-    B --> C[Ask the AI agent to collect<br/>related nodes and edges]
-    C --> F[Save nodes and edges<br/>to local store]
-    F --> G[Build graph around the node]
+    T1[On click<br/>current node in editor] --> C
+    T2[By chat<br/>ask the agent CLI] --> C
+    C[Agent CLI collects<br/>related nodes and edges] --> F[Save nodes and edges<br/>to local store]
+    F --> G[Graph engine<br/>builds graph]
     G --> H[Graph view<br/>always live]
     G -- node has no further edges --> I[Mark as leaf]
 
     H -- expand a node<br/>next hop, on demand --> C
     H -- click a node --> J[Jump to its source<br/>in the editor]
-    H -- make it the new center --> B
+    H -- make it the new center --> T1
 ```
